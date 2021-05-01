@@ -52,6 +52,6 @@ public class Item {
 	}
 	@Override
 	public String toString() {
-		return "soap #" + id + " " + itemName + ": selling for $" + price;
+		return "soap #" + id + " " + itemName + " @ $" + price;
 	}
 }

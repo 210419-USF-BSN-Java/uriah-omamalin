@@ -22,11 +22,25 @@ public class Main {
 							ch = Menu.displayCustomerMenu(activeUser);
 							switch (ch) {
 							case 1 : Menu.displayAvailableSoaps(activeUser); break;
-							case 2 : Menu.oln("my soaps under construction"); break;
+							case 2 : Menu.displayMySoaps(activeUser); break;
 							case 3 : Menu.oln("my payments under construction"); break;
 							}
-						break;
-						case EMPLOYEE :	Menu.oln("employee under construction"); break;
+							break;
+						case EMPLOYEE :
+							ch = Menu.displayEmployeeMenu(activeUser);
+							switch (ch) {
+							case 1 : 
+								ch = Menu.displayManageSoaps();
+								switch (ch) {
+								case 1 : Menu.displayAddSoap(); break;
+								case 2 : Menu.displayDeleteSoap(); break;
+								case 3 : Menu.displayEditSoap(); break;
+								}
+								break;
+							case 2 : Menu.oln("pending offers under construction"); break;
+							case 3 : Menu.oln("view payments under construction"); break;
+							}
+							break;
 						case MANAGER : Menu.oln("manager under construction"); break;
 						}
 					} while (ch != 0);

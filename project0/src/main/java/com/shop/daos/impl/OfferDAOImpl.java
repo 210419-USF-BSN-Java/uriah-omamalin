@@ -41,11 +41,8 @@ public class OfferDAOImpl implements OfferDAO {
 		return null;
 	}
 	@Override
-	public void update(Integer primaryKey) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void delete(Integer primaryKey) {
+	public int delete(Integer primaryKey) {
+		return primaryKey;
 		// TODO Auto-generated method stub
 	}
 }

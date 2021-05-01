@@ -6,34 +6,35 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.shop.daos.UserDAO;
+import com.shop.daos.EmployeeDAO;
 import com.shop.dbutil.ConnectionUtil;
-import com.shop.models.User;
+import com.shop.models.Employee;
 import com.shop.util.Menu;
 
-public class UserDAOImpl implements UserDAO {
+public class EmployeeDAOImpl implements EmployeeDAO {
 	@Override
-	public Integer create(User newEntry) {
+	public Integer create(Employee newEntry) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public User read(Integer primaryKey) {
-		User user = null;
-		String sql = "select * from shop.users where id = ?";
+	public Employee read(Integer primaryKey) {
+		Employee emp = null;
+		String sql = "select * from shop.employees where id = ?";
 		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, primaryKey);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				user = new User();
-				user.setId(primaryKey);
-				user.setUserType(rs.getInt("user_type"));
+				emp = new Employee();
+				emp.setId(primaryKey);
+				emp.setFirstName(rs.getString("first_name"));
+				emp.setLastName(rs.getString("last_name"));
 			}
 		} catch (SQLException | IOException e) {
 			Menu.errorln(e.getMessage());
 		}
-		return user;
+		return emp;
 	}
 	@Override
 	public int delete(Integer primaryKey) {

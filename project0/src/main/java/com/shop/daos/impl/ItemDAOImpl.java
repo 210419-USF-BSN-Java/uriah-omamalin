@@ -12,13 +12,30 @@ import java.util.List;
 import com.shop.daos.ItemDAO;
 import com.shop.dbutil.ConnectionUtil;
 import com.shop.models.Item;
+import com.shop.models.User;
 import com.shop.util.Menu;
 
 public class ItemDAOImpl implements ItemDAO {
 	@Override
 	public Integer create(Item newEntry) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "insert into shop.items (item_name, price) values (?, ?) returning id";
+		int i = -1;
+		
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, newEntry.getItemName());
+			ps.setBigDecimal(2, newEntry.getPrice());
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				i = rs.getInt("id");
+			}
+		} catch (SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return i;
 	}
 	@Override
 	public Item read(Integer primaryKey) {
@@ -42,17 +59,23 @@ public class ItemDAOImpl implements ItemDAO {
 		return i;
 	}
 	@Override
-	public void update(Integer primaryKey) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void delete(Integer primaryKey) {
-		// TODO Auto-generated method stub
+	public int delete(Integer primaryKey) {
+		int i = 0;
+		String sql = "delete from shop.items where id = ?";
+		
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, primaryKey);
+			i = ps.executeUpdate();
+		} catch (SQLException | IOException e) {
+			Menu.errorln(e.getMessage());
+		}
+		return i;
 	}
 	@Override
 	public List<Item> getAvailableItems() {
 		List<Item> li = new ArrayList<Item>();
-		String sql = "select * from shop.items where status = 0";
+		String sql = "select * from shop.items where status = 0 order by id";
 		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
 			Statement s = con.createStatement();
 			ResultSet rs = s.executeQuery(sql);
@@ -69,5 +92,57 @@ public class ItemDAOImpl implements ItemDAO {
 			Menu.errorln(e.getMessage());
 		}
 		return li;
+	}
+	@Override
+	public List<Item> getItemsByOwnerId(User user) {
+		List<Item> li = new ArrayList<Item>();
+		String sql = "select * from shop.items where owner_id = ?";
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, user.getId());
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Item i = new Item();
+				i.setId(rs.getInt("id"));
+				i.setItemName(rs.getString("item_name"));
+				i.setPrice(rs.getBigDecimal("price"));
+				i.setStatus(rs.getInt("status"));
+				i.setOwnerId(rs.getInt("owner_id"));
+				li.add(i);
+			}
+		} catch (SQLException | IOException e) {
+			Menu.errorln(e.getMessage());
+		}
+		return li;
+	}
+	@Override
+	public int updateName(Item item) {
+		int a = 0;
+		String sql = "update shop.items set item_name = ? where id = ?";
+		
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, item.getItemName());
+			ps.setInt(2, item.getId());
+			a = ps.executeUpdate();
+		} catch (SQLException | IOException e) {
+			Menu.errorln(e.getMessage());
+		}
+		return a;
+	}
+	@Override
+	public int updatePrice(Item item) {
+		int a = 0;
+		String sql = "update shop.items set price = ? where id = ?";
+		
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setBigDecimal(1, item.getPrice());
+			ps.setInt(2, item.getId());
+			a = ps.executeUpdate();
+		} catch (SQLException | IOException e) {
+			Menu.errorln(e.getMessage());
+		}
+		return a;
 	}
 }

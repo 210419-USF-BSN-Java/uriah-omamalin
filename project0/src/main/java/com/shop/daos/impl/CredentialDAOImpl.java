@@ -36,11 +36,8 @@ public class CredentialDAOImpl implements CredentialDAO {
 		return cred;
 	}
 	@Override
-	public void update(Integer primaryKey) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void delete(Integer primaryKey) {
+	public int delete(Integer primaryKey) {
+		return primaryKey;
 		// TODO Auto-generated method stub
 	}
 }
