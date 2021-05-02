@@ -109,12 +109,15 @@ public class Menu {
 				o("how much would you like to offer?");
 				s = sc.nextLine();
 				if (InputValidation.validateMoneyFormat(s)) {
-					Offer o = new Offer();
-					o.setAmount(BigDecimal.valueOf(Double.parseDouble(s.replaceAll("[$]", ""))));
-					o.setCustomerId(user.getId());
-					o.setDate(new Date());
-					o.setItemId(currentSoap.getId());
-					oln("your offer id is: " + os.makeOffer(o));
+					BigDecimal dollar = BigDecimal.valueOf(Double.parseDouble(s.replaceAll("[$]", "")));
+					if (InputValidation.validateMoneyAmount(dollar)) {
+						Offer o = new Offer();
+						o.setAmount(dollar);
+						o.setCustomerId(user.getId());
+						o.setDateTime(new Date());
+						o.setItemId(currentSoap.getId());
+						oln("your offer id is: " + os.makeOffer(o));
+					}
 				}
 		} catch (InvalidInputException | BusinessException e) {
 			errorln(e.getMessage());
@@ -272,6 +275,57 @@ public class Menu {
 		} catch (InvalidInputException | BusinessException e) {
 			errorln(e.getMessage());
 		}
+	}
+	public static void displayPendingOffers() {
+		List<Offer> pendingOffers = os.getPendingOffers();
+		int id = 0;
+		Offer currentOffer = null;
+		String s;
+		
+		for (Offer o : pendingOffers) {
+			o(o.toString());
+		}
+		b();
+		o("select offer to approve or reject:");
+		s = sc.nextLine();
+		try {
+			if (InputValidation.validateInt(s)) id = Integer.parseInt(s);
+				currentOffer = os.selectOffer(id);
+				o("selected offer: offer #" + currentOffer.getId());
+				o("are you sure? (y/n)");
+				s = sc.nextLine();
+				if (InputValidation.validateYN(s)) {
+					if (s.toLowerCase().equals("y")) {
+						o("accept this offer? (y/n)");
+						s = sc.nextLine();
+						if (InputValidation.validateYN(s)) {
+							if (s.toLowerCase().equals("y")) {
+								os.acceptOffer(currentOffer);
+								oln("offer accepted");
+							} else {
+								os.rejectOffer(currentOffer);
+								oln("offer rejected");
+							}
+						}
+					} else b();
+				}		
+		} catch (InvalidInputException | BusinessException e) {
+			errorln(e.getMessage());
+		}
+	}
+	public static void displayPaymentsAndProcessedOffersToCustomer(User user) {
+		List<Offer> aOffers = os.getAcceptedOffersByCustomerId(user.getId());
+		List<Offer> rOffers = os.getRejectedOffersByCustomerId(user.getId());
+		oln("accepted offers:");
+		for (Offer o : aOffers) {
+			o(o.toString());
+		}
+		b();
+		oln("rejected offers:");
+		for (Offer o : rOffers) {
+			o(o.toString());
+		}
+		b();
 	}
 	
 	// utility

@@ -10,4 +10,5 @@ public interface ItemDAO extends GenericDAO<Item, Integer> {
 	List<Item> getItemsByOwnerId(User user);
 	int updateName(Item item);
 	int updatePrice(Item item);
+	int updateStatusAndOwner(Item item);
 }

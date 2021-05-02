@@ -145,4 +145,20 @@ public class ItemDAOImpl implements ItemDAO {
 		}
 		return a;
 	}
+	@Override
+	public int updateStatusAndOwner(Item item) {
+		int a = 0;
+		String sql = "update shop.items set status = ?, owner_id = ? where id = ?";
+		
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, item.getStatus());
+			ps.setInt(2, item.getOwnerId());
+			ps.setInt(3, item.getId());
+			a = ps.executeUpdate();
+		} catch (SQLException | IOException e) {
+			Menu.errorln(e.getMessage());
+		}
+		return a;
+	}
 }

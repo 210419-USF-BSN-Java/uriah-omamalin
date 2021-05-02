@@ -23,7 +23,7 @@ public class Main {
 							switch (ch) {
 							case 1 : Menu.displayAvailableSoaps(activeUser); break;
 							case 2 : Menu.displayMySoaps(activeUser); break;
-							case 3 : Menu.oln("my payments under construction"); break;
+							case 3 : Menu.displayPaymentsAndProcessedOffersToCustomer(activeUser); break;
 							}
 							break;
 						case EMPLOYEE :
@@ -36,8 +36,9 @@ public class Main {
 								case 2 : Menu.displayDeleteSoap(); break;
 								case 3 : Menu.displayEditSoap(); break;
 								}
+								ch = -1;
 								break;
-							case 2 : Menu.oln("pending offers under construction"); break;
+							case 2 : Menu.displayPendingOffers(); break;
 							case 3 : Menu.oln("view payments under construction"); break;
 							}
 							break;
@@ -45,6 +46,7 @@ public class Main {
 						}
 					} while (ch != 0);
 				}
+			ch = -1;
 			break;
 			case 2 : Menu.oln("registration under construction"); break;
 			}

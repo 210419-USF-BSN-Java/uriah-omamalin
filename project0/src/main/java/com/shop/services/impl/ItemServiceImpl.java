@@ -46,4 +46,8 @@ public class ItemServiceImpl implements ItemService {
 		i.setPrice(d);
 		if (itd.updatePrice(i) == 0) throw new BusinessException("soap price edit failed");
 	}
+	@Override
+	public Item getItemDetails(int id) {
+		return itd.read(id);
+	}
 }
