@@ -9,4 +9,5 @@ public interface OfferDAO extends GenericDAO<Offer, Integer> {
 	int updateOfferStatus(Offer o, int status);
 	List<Offer> getOffersByStatus(int i);
 	List<Offer> getOffersByItemId(int itemId);
+	int updateOfferPaymentStatus(Offer o);
 }

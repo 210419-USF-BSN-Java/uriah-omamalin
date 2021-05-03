@@ -51,12 +51,16 @@ CREATE TABLE shop.offers (
 	amount numeric(5, 2) CHECK (amount > 0) NOT NULL,
 	status int2 CHECK (status >= 0 AND status <= 2) NOT NULL,
 	date_time timestamp(0) NOT NULL,
+	has_plan bool NULL,
 	CONSTRAINT offers_pk PRIMARY KEY (id)
 );
 
 CREATE TABLE shop.payments (
 	offer_id int4 NOT NULL,
-	payment_plan int2 CHECK (payment_plan >= 0 AND payment_plan <= 3) NOT NULL,
+	payment_plan int2 null default NULL,
+	weekly_payment numeric(5,2) null default NULL,
+	remaining_payments int2 null default null,
+	CONSTRAINT payments_payment_plan_check CHECK (((payment_plan >= 0) AND (payment_plan <= 2))),
 	CONSTRAINT payments_pk PRIMARY KEY (offer_id)
 );
 

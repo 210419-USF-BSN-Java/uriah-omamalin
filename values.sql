@@ -26,23 +26,34 @@ insert into shop.credentials (id, user_pass) values (10, 'DJkNpy');
 
 -- items
 
-insert into shop.items (item_name, price, status, owner_id) values ('pede', 89.89, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('consequat', 60.23, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('in', 71.04, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('pellentesque', 19.97, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('ante', 47.58, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('tristique', 89.38, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('ipsum', 81.55, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('in', 38.03, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('ligula', 37.59, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('ut', 93.91, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('orci', 67.5, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('luctus', 67.78, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('nulla', 92.83, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('congue', 44.28, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('nam', 98.32, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('in', 77.94, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('velit', 16.63, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('lorem', 25.41, 1, 2);
-insert into shop.items (item_name, price, status, owner_id) values ('quam', 15.51, 0, null);
-insert into shop.items (item_name, price, status, owner_id) values ('duis', 73.44, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Slippery', 89.89, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Bubbly', 60.23, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Scented', 71.04, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Fancy', 19.97, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Plain', 47.58, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Liquid', 89.38, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Big', 81.55, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Tasty', 38.03, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Shampoo', 37.59, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Body', 93.91, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Soft', 67.5, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Small', 67.78, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Dish', 92.83, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Triangle', 44.28, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Small', 98.32, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Hand', 77.94, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Default', 16.63, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Bar', 25.41, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Used', 15.51, 0, null);
+insert into shop.items (item_name, price, status, owner_id) values ('Complimentary', 73.44, 0, null);
+
+-- offers
+
+INSERT INTO shop.offers (customer_id, item_id, amount, status, date_time) VALUES(2, 1, 90.00, 0, '2021-05-02 18:50:51.000');
+INSERT INTO shop.offers (customer_id, item_id, amount, status, date_time) VALUES(2, 2, 70.00, 0, '2021-05-02 18:50:56.000');
+INSERT INTO shop.offers (customer_id, item_id, amount, status, date_time) VALUES(2, 3, 50.00, 0, '2021-05-02 18:51:00.000');
+INSERT INTO shop.offers (customer_id, item_id, amount, status, date_time) VALUES(4, 1, 22.00, 0, '2021-05-02 18:52:33.000');
+INSERT INTO shop.offers (customer_id, item_id, amount, status, date_time) VALUES(4, 2, 90.05, 0, '2021-05-02 18:52:58.000');
+INSERT INTO shop.offers (customer_id, item_id, amount, status, date_time) VALUES(4, 3, 55.97, 0, '2021-05-02 18:53:05.000');
+
+

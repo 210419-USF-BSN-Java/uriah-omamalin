@@ -1,3 +1,5 @@
+for similar service logic functions, struggled with keeping consistent method functionality (e.g. some service methods that added data to the database return boolean for successful operation, whereas others return some value to be used by the presentation layer)
+
 TO DO:
 
 add java checks for price numerics + varchar limits (04/30)
@@ -12,7 +14,7 @@ add empty list output to all list instances (05/01)
 	3 points - register for customer account
 	1 point - cust view remaining payments
 	1 point - emp view all payments
-	1 point - system calculate weekly payment
+	xxxx 1 point - system calculate weekly payment
 
 	also implement junit tests..
 	also add more checks to db (check constraints)
@@ -41,6 +43,11 @@ sunday: finish user stories
 monday: junit+db checks -> begin bonus implementations
 tuesday: prepare for presentation (what features to showcase)
 
+tentative schedule:
+
+monday: finish emp payments + registration + junit+db checks
+tuesday: prepare for presentation
+
 FINISHED:
 
 exiting from edit soap menu shouldn't end program (05/01) 
@@ -49,3 +56,8 @@ exiting from edit soap menu shouldn't end program (05/01)
 QUESTIONS:
 
 what is mocking???? compared to unit testing????
+
+POTENTIAL FUTURE IMPLEMENTATIONS
+
+system automatically rejects an offer that is x% below market value
+user can manage multiple items/offers at once (e.g. employee accepting several offers at once)

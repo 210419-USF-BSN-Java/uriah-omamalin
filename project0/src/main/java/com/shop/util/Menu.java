@@ -1,6 +1,8 @@
 package com.shop.util;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -13,20 +15,25 @@ import com.shop.models.Customer;
 import com.shop.models.Employee;
 import com.shop.models.Item;
 import com.shop.models.Offer;
+import com.shop.models.Payment;
 import com.shop.models.User;
 import com.shop.services.ItemService;
 import com.shop.services.OfferService;
+import com.shop.services.PaymentService;
 import com.shop.services.UserService;
 import com.shop.services.impl.ItemServiceImpl;
 import com.shop.services.impl.OfferServiceImpl;
+import com.shop.services.impl.PaymentServiceImpl;
 import com.shop.services.impl.UserServiceImpl;
 
 public class Menu {
+	// utility classes
 	private static Logger log = Logger.getLogger(Menu.class);
 	private static Scanner sc = new Scanner(System.in);
 	private static UserService us = new UserServiceImpl();
 	private static ItemService is = new ItemServiceImpl();
 	private static OfferService os = new OfferServiceImpl();
+	private static PaymentService ps = new PaymentServiceImpl();
 	
 	private static final int LENGTH = 64;
 	
@@ -290,7 +297,7 @@ public class Menu {
 		s = sc.nextLine();
 		try {
 			if (InputValidation.validateInt(s)) id = Integer.parseInt(s);
-				currentOffer = os.selectOffer(id);
+				currentOffer = os.selectPendingOffer(id);
 				o("selected offer: offer #" + currentOffer.getId());
 				o("are you sure? (y/n)");
 				s = sc.nextLine();
@@ -313,19 +320,87 @@ public class Menu {
 			errorln(e.getMessage());
 		}
 	}
-	public static void displayPaymentsAndProcessedOffersToCustomer(User user) {
+	public static void displayProcessedOffersToCustomer(User user) {
 		List<Offer> aOffers = os.getAcceptedOffersByCustomerId(user.getId());
+		List<Offer> aOffersWithNoPayments = new ArrayList<Offer>();
+		List<Offer> aOffersWithPayments = new ArrayList<Offer>();
 		List<Offer> rOffers = os.getRejectedOffersByCustomerId(user.getId());
-		oln("accepted offers:");
+		String s;
+		int id = 0;
+		Offer currentOffer;
+		
+		oln("-- payments:");
 		for (Offer o : aOffers) {
-			o(o.toString());
+			if (o.getHasPlan()) {
+				aOffersWithPayments.add(o);
+				o(o.toString());
+			}
 		}
+		if (aOffersWithPayments.size() == 0) o("no payments found");
 		b();
-		oln("rejected offers:");
+		oln("-- accepted offers:");
+		for (Offer o : aOffers) {
+			if (!o.getHasPlan()) {
+				aOffersWithNoPayments.add(o);
+				o(o.toString());
+			}
+		}
+		if (aOffersWithNoPayments.size() == 0) o("no offers found");
+		b();
+		oln("-- rejected offers:");
 		for (Offer o : rOffers) {
 			o(o.toString());
 		}
+		if (rOffers.size() == 0) o("no offers found");
 		b();
+		o("enter id of payment or accepted offer that you would like to view:");
+		s = sc.nextLine();
+		try {
+			if (InputValidation.validateInt(s)) id = Integer.parseInt(s);
+				currentOffer = os.selectAcceptedOffer(id);
+				o("selected soap: " + currentOffer.toString());
+				o("view this offer? (y/n)");
+				s = sc.nextLine();
+				b();
+				if (InputValidation.validateYN(s)) {
+					if (s.toLowerCase().equals("y")) displayPaymentDetails(currentOffer);
+				}
+		} catch (InvalidInputException | BusinessException e) {
+			errorln(e.getMessage());
+		}
+	}
+	public static void displayPaymentDetails(Offer o) {
+		String s;
+		Payment p;
+		
+		oln(o.toString());
+		try {
+			p = ps.getPaymentDetails(o);
+			if (p == null) {
+				o("no payment plan found. set one up now? (y/n)");
+				s = sc.nextLine();
+				b();
+				if (InputValidation.validateYN(s)) {
+					o("1 - 1 whole payment");
+					o("2 - 2 weekly payments");
+					oln("3 - 3 weekly payments");
+					o("select a payment plan:");
+					s = sc.nextLine();
+					b();
+					if (InputValidation.validateIntWithinRange(s, 1, 3)) {
+						int ch = Integer.parseInt(s);
+						p = new Payment();
+						p.setOfferId(o.getId());
+						p.setPaymentPlan(ch - 1);
+						p.setWeeklyPayment(o.getAmount().divide(BigDecimal.valueOf(ch), 2, RoundingMode.HALF_EVEN));
+						ps.setUpPayment(p);
+						oln("payment set up successfully");
+					}
+				}
+			} else oln(p.toString());
+		} catch (InvalidInputException e) {
+			errorln(e.getMessage());
+		}
 	}
 	
 	// utility

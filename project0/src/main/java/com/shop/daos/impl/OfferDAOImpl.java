@@ -54,6 +54,7 @@ public class OfferDAOImpl implements OfferDAO {
 				o.setDateTime(rs.getDate("date_time"));
 				o.setItemId(rs.getInt("item_id"));
 				o.setStatus(rs.getInt("status"));
+				o.setHasPlan(rs.getBoolean("has_plan"));
 			}
 		} catch (SQLException | IOException e) {
 			Menu.errorln(e.getMessage());
@@ -97,6 +98,7 @@ public class OfferDAOImpl implements OfferDAO {
 				o.setDateTime(rs.getDate("date_time"));
 				o.setItemId(rs.getInt("item_id"));
 				o.setStatus(rs.getInt("status"));
+				o.setHasPlan(rs.getBoolean("has_plan"));
 				li.add(o);
 			}
 		} catch (SQLException | IOException e) {
@@ -106,7 +108,7 @@ public class OfferDAOImpl implements OfferDAO {
 	}
 	public List<Offer> getOffersByStatus(int status) {
 		List<Offer> li = new ArrayList<Offer>();
-		String sql = "select * from shop.offers where status = ? order by id";
+		String sql = "select * from shop.offers where status = ? order by item_id, amount desc";
 		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, status);
@@ -119,6 +121,7 @@ public class OfferDAOImpl implements OfferDAO {
 				o.setDateTime(rs.getDate("date_time"));
 				o.setItemId(rs.getInt("item_id"));
 				o.setStatus(rs.getInt("status"));
+				o.setHasPlan(rs.getBoolean("has_plan"));
 				li.add(o);
 			}
 		} catch (SQLException | IOException e) {
@@ -141,11 +144,26 @@ public class OfferDAOImpl implements OfferDAO {
 				o.setDateTime(rs.getDate("date_time"));
 				o.setItemId(rs.getInt("item_id"));
 				o.setStatus(rs.getInt("status"));
+				o.setHasPlan(rs.getBoolean("has_plan"));
 				li.add(o);
 			}
 		} catch (SQLException | IOException e) {
 			Menu.errorln(e.getMessage());
 		}
 		return li;
+	}
+	public int updateOfferPaymentStatus(Offer o) {
+		int a = 0;
+		String sql = "update shop.offers set has_plan = ? where id = ?";
+		
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setBoolean(1, o.getHasPlan());
+			ps.setInt(2, o.getId());
+			a = ps.executeUpdate();
+		} catch (SQLException | IOException e) {
+			Menu.errorln(e.getMessage());
+		}
+		return a;
 	}
 }

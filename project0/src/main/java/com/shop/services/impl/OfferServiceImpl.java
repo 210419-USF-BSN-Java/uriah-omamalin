@@ -31,17 +31,26 @@ public class OfferServiceImpl implements OfferService {
 		return od.getOffersByStatusAndCustomerId(2, id);
 	}
 	@Override
-	public Offer selectOffer(int id) throws BusinessException {
+	public Offer selectPendingOffer(int id) throws BusinessException {
 		Offer o = od.read(id);
 		if (o != null) {
 			if (o.getStatus() == 0) return o;
-			else throw new BusinessException("that offer is not available");
+			else throw new BusinessException("that offer is not pending");
+		} else throw new BusinessException("that offer does not exist");
+	}
+	public Offer selectAcceptedOffer(int id) throws BusinessException {
+		Offer o = od.read(id);
+		if (o != null) {
+			if (o.getStatus() == 1) return o;
+			else throw new BusinessException("that offer is not accepted");
 		} else throw new BusinessException("that offer does not exist");
 	}
 	@Override
 	public void acceptOffer(Offer offer) throws BusinessException {
 		if (od.updateOfferStatus(offer, 1) == 0) throw new BusinessException("failed to accept offer");
 		else {
+			offer.setHasPlan(false);
+			od.updateOfferPaymentStatus(offer);
 			Item i = new Item();
 			i.setId(offer.getItemId());
 			i.setStatus(1);

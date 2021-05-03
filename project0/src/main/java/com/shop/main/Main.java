@@ -23,7 +23,7 @@ public class Main {
 							switch (ch) {
 							case 1 : Menu.displayAvailableSoaps(activeUser); break;
 							case 2 : Menu.displayMySoaps(activeUser); break;
-							case 3 : Menu.displayPaymentsAndProcessedOffersToCustomer(activeUser); break;
+							case 3 : Menu.displayProcessedOffersToCustomer(activeUser); break;
 							}
 							break;
 						case EMPLOYEE :

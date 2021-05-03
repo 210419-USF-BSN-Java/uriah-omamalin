@@ -14,12 +14,13 @@ public class Offer {
 	private BigDecimal amount;
 	private OfferStatus status;
 	private Date dateTime;
+	private Boolean hasPlan;
 	
 	private UserService us = new UserServiceImpl();
 	private ItemService is = new ItemServiceImpl();
 	
 	public Offer() { }
-	public Offer(Integer id, Integer customerId, Integer itemId, BigDecimal amount, OfferStatus status, Date date) {
+	public Offer(Integer id, Integer customerId, Integer itemId, BigDecimal amount, OfferStatus status, Date date, Boolean hasPlan) {
 		super();
 		this.id = id;
 		this.customerId = customerId;
@@ -27,6 +28,7 @@ public class Offer {
 		this.amount = amount;
 		this.status = status;
 		this.dateTime = date;
+		this.hasPlan = hasPlan;
 	}
 	
 	public Integer getId() {
@@ -65,6 +67,12 @@ public class Offer {
 	public void setDateTime(Date date) {
 		this.dateTime = date;
 	}
+	public Boolean getHasPlan() {
+		return hasPlan;
+	}
+	public void setHasPlan(Boolean hasPlan) {
+		this.hasPlan = hasPlan;
+	}
 	@Override
 	public String toString() {
 		User u = new User();
@@ -72,7 +80,7 @@ public class Offer {
 		Item i = is.getItemDetails(itemId);
 		return "offer #" + id + " by " + 
 			   us.getCustomerDetails(u).getFirstName() + " " + 
-			   us.getCustomerDetails(u).getLastName() + " on soap " + 
+			   us.getCustomerDetails(u).getLastName() + " on " + 
 			   i.getItemName() + " (market value $" + 
 			   i.getPrice() + ") of $" + amount;
 	}
