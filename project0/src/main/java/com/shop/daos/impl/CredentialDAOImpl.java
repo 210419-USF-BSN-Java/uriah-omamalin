@@ -14,8 +14,17 @@ import com.shop.util.Menu;
 public class CredentialDAOImpl implements CredentialDAO {
 	@Override
 	public Integer create(Credential newEntry) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "insert into shop.credentials (id, user_pass) values (?, ?)";
+		
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, newEntry.getId());
+			ps.setString(2, newEntry.getUserPass());
+			ps.executeUpdate();
+		} catch (SQLException | IOException e) {
+			Menu.errorln(e.getMessage());
+		}
+		return newEntry.getId();
 	}
 	@Override
 	public Credential read(Integer primaryKey) {

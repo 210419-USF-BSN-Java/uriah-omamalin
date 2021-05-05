@@ -106,6 +106,7 @@ public class Menu {
 		for (Item i : availableSoaps) {
 			o(i.toString());
 		}
+		if (availableSoaps.size() == 0) o("no soaps found");
 		b();
 		o("enter id of the soap you would like to buy:");
 		s = sc.nextLine();
@@ -137,6 +138,7 @@ public class Menu {
 		for (Item i : mySoaps) {
 			o(i.toString());
 		}
+		if (mySoaps.size() == 0) o("no soaps found");
 		b();
 	}
 	public static int displayEmployeeMenu(User user) {
@@ -208,6 +210,7 @@ public class Menu {
 		for (Item i : availableSoaps) {
 			o(i.toString());
 		}
+		if (availableSoaps.size() == 0) o("no soaps found");
 		b();
 		o("enter id of the soap to delete:");
 		s = sc.nextLine();
@@ -238,6 +241,7 @@ public class Menu {
 		for (Item i : availableSoaps) {
 			o(i.toString());
 		}
+		if (availableSoaps.size() == 0) o("no soaps found");
 		b();
 		o("enter id of the soap to edit:");
 		s = sc.nextLine();
@@ -292,6 +296,8 @@ public class Menu {
 		for (Offer o : pendingOffers) {
 			o(o.toString());
 		}
+		if (pendingOffers.size() == 0) o("no offers found");
+		b();
 		b();
 		o("select offer to approve or reject:");
 		s = sc.nextLine();
@@ -357,7 +363,7 @@ public class Menu {
 		s = sc.nextLine();
 		try {
 			if (InputValidation.validateInt(s)) id = Integer.parseInt(s);
-				currentOffer = os.selectAcceptedOffer(id);
+				currentOffer = os.selectAcceptedOffer(id, user);
 				o("selected soap: " + currentOffer.toString());
 				o("view this offer? (y/n)");
 				s = sc.nextLine();
@@ -398,6 +404,41 @@ public class Menu {
 					}
 				}
 			} else oln(p.toString());
+		} catch (InvalidInputException e) {
+			errorln(e.getMessage());
+		}
+	}
+	public static void displayCustomerPayments() {
+		List<Payment> allPayments = ps.getAllPayments();
+		
+		oln("list of payments:");
+		for (Payment p : allPayments) {
+			o(p.toString());
+		}
+		if (allPayments.size() == 0) o("no payments found");
+		b();
+	}
+	public static void displayRegister() {
+		String s, pass;
+		Customer c = new Customer();
+		
+		o("enter first name:");
+		s = sc.nextLine();
+		try {
+			if (InputValidation.validateLength(s)) {
+				c.setFirstName(s);
+				o("enter last name:");
+				s = sc.nextLine();
+				if (InputValidation.validateLength(s)) {
+					c.setLastName(s);
+					o("set a password:");
+					pass = sc.nextLine();
+					b();
+					if (InputValidation.validateLength(pass)) {
+						oln("you have successfully registered for an account. your id to log in is " + us.register(c, pass) + ".");
+					}
+				}
+			}
 		} catch (InvalidInputException e) {
 			errorln(e.getMessage());
 		}

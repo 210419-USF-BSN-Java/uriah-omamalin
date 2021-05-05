@@ -11,4 +11,5 @@ public interface UserService {
 	Customer getCustomerDetails(User user);
 	Employee getEmployeeDetails(User user);
 	Manager getManagerDetails(User user);
+	int register(Customer c, String pass);
 }

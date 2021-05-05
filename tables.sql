@@ -8,7 +8,7 @@ CREATE TABLE shop.users (
 
 CREATE TABLE shop.credentials (
 	id int4 NOT NULL,
-	user_pass varchar(20) NOT NULL,
+	user_pass char(64) NOT NULL,
 	CONSTRAINT credentials_pk PRIMARY KEY (id)
 );
 

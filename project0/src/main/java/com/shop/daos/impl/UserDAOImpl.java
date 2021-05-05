@@ -14,8 +14,22 @@ import com.shop.util.Menu;
 public class UserDAOImpl implements UserDAO {
 	@Override
 	public Integer create(User newEntry) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "insert into shop.users (user_type) values (?) returning id";
+		int i = -1;
+		
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, newEntry.getUserType());
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				i = rs.getInt("id");
+			}
+		} catch (SQLException | IOException e) {
+			Menu.errorln(e.getMessage());
+		}
+		return i;
 	}
 	@Override
 	public User read(Integer primaryKey) {

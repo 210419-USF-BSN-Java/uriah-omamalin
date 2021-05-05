@@ -14,8 +14,18 @@ import com.shop.util.Menu;
 public class CustomerDAOImpl implements CustomerDAO {
 	@Override
 	public Integer create(Customer newEntry) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "insert into shop.customers (id, first_name, last_name) values (?, ?, ?)";
+		
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, newEntry.getId());
+			ps.setString(2, newEntry.getFirstName());
+			ps.setString(3, newEntry.getLastName());
+			ps.executeUpdate();
+		} catch (SQLException | IOException e) {
+			Menu.errorln(e.getMessage());
+		}
+		return newEntry.getId();
 	}
 	@Override
 	public Customer read(Integer primaryKey) {

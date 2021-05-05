@@ -1,5 +1,7 @@
 package com.shop.services.impl;
 
+import java.util.List;
+
 import com.shop.daos.OfferDAO;
 import com.shop.daos.PaymentDAO;
 import com.shop.daos.impl.OfferDAOImpl;
@@ -22,5 +24,9 @@ public class PaymentServiceImpl implements PaymentService {
 		o.setId(p.getOfferId());
 		o.setHasPlan(true);
 		od.updateOfferPaymentStatus(o);
+	}
+	@Override
+	public List<Payment> getAllPayments() {
+		return pd.getAllPaymnets();
 	}
 }

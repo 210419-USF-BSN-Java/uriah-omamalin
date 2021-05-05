@@ -39,18 +39,21 @@ public class Main {
 								ch = -1;
 								break;
 							case 2 : Menu.displayPendingOffers(); break;
-							case 3 : Menu.oln("view payments under construction"); break;
+							case 3 : Menu.displayCustomerPayments(); break;
 							}
 							break;
-						case MANAGER : Menu.oln("manager under construction"); break;
+						case MANAGER : 
+							Menu.oln("manager menu under construction");
+							activeUser = Menu.displayLogin();
+							break;
 						}
 					} while (ch != 0);
 				}
 			ch = -1;
 			break;
-			case 2 : Menu.oln("registration under construction"); break;
+			case 2 : Menu.displayRegister(); break;
 			}
 		} while (ch != 0);
-		Menu.oln("c u l8r");
+		Menu.oln("hope to see you again!");
 	}
 }

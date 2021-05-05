@@ -29,7 +29,7 @@ public class ItemServiceImpl implements ItemService {
 		return itd.getItemsByOwnerId(user);
 	}
 	@Override
-	public Integer addSoap(Item i) {
+	public int addSoap(Item i) {
 		return itd.create(i);
 	}
 	@Override

@@ -13,16 +13,16 @@ insert into shop.users (user_type) values (0); insert into shop.customers (id, f
 
 -- credentials
 
-insert into shop.credentials (id, user_pass) values (1, 'vDulUhPn1W');
-insert into shop.credentials (id, user_pass) values (2, 'customer');
-insert into shop.credentials (id, user_pass) values (3, '8BcBUmz');
-insert into shop.credentials (id, user_pass) values (4, 'customer');
-insert into shop.credentials (id, user_pass) values (5, 'employee');
-insert into shop.credentials (id, user_pass) values (6, 'dYWkJiMHv0');
-insert into shop.credentials (id, user_pass) values (7, 'DO3GOC');
-insert into shop.credentials (id, user_pass) values (8, 'MbO4JGQY');
-insert into shop.credentials (id, user_pass) values (9, 'p4wDQgUX');
-insert into shop.credentials (id, user_pass) values (10, 'DJkNpy');
+insert into shop.credentials (id, user_pass) values (1, '4216ebd9947c44c29651ea8ff3d1118f725d4cb7b0f5f8b004349e195ca93bdd'); -- vDulUhPn1W
+insert into shop.credentials (id, user_pass) values (2, 'b6c45863875e34487ca3c155ed145efe12a74581e27befec5aa661b8ee8ca6dd'); -- customer
+insert into shop.credentials (id, user_pass) values (3, '0e22585d5f24fa172ef052ed3899720498e71e504e5c8e66387f96a6949d7938'); -- 8BcBUmz
+insert into shop.credentials (id, user_pass) values (4, 'b6c45863875e34487ca3c155ed145efe12a74581e27befec5aa661b8ee8ca6dd'); -- customer
+insert into shop.credentials (id, user_pass) values (5, '2fdc0177057d3a5c6c2c0821e01f4fa8d90f9a3bb7afd82b0db526af98d68de8'); -- employee
+insert into shop.credentials (id, user_pass) values (6, 'd8eef676003fad1211ec9a53e621d1c9c32fa179ec8ee1d83d41a4bfb55c9689'); -- dYWkJiMHv0
+insert into shop.credentials (id, user_pass) values (7, '65bc1c0818338c373f3be8db4b81ae09bda9c8fb0bde89b4d751de3f7e80d63b'); -- DO3GOC
+insert into shop.credentials (id, user_pass) values (8, '0b077dfed346cbf0e2eafbd74c8acda885697856f7a70bce2deed1f7f7f53a49'); -- MbO4JGQY
+insert into shop.credentials (id, user_pass) values (9, '121fd28562f5e7418d7aa9b35bba651e522580764f87b1d9d2f822d92b8cc753'); -- p4wDQgUX
+insert into shop.credentials (id, user_pass) values (10, 'd126b807c27e3e9f4ee2c6b3dd95149afba0d80c5818abe4521d5c63c4190ac2'); -- DJkNpy
 
 -- items
 

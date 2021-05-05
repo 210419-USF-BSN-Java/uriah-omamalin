@@ -32,8 +32,7 @@ public class ItemDAOImpl implements ItemDAO {
 				i = rs.getInt("id");
 			}
 		} catch (SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Menu.errorln(e.getMessage());
 		}
 		return i;
 	}

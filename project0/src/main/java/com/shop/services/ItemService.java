@@ -12,7 +12,7 @@ public interface ItemService {
 	Item selectSoap(int id) throws BusinessException;
 	Item getItemDetails(int id);
 	List<Item> getMySoaps(User user);
-	Integer addSoap(Item i);
+	int addSoap(Item i);
 	void deleteSoap(Item i) throws BusinessException;
 	void updateSoapName(Item i, String s) throws BusinessException;
 	void updateSoapPrice(Item i, BigDecimal d) throws BusinessException;

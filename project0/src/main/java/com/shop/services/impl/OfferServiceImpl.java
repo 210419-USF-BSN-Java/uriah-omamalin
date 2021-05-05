@@ -9,6 +9,7 @@ import com.shop.daos.impl.OfferDAOImpl;
 import com.shop.exceptions.BusinessException;
 import com.shop.models.Item;
 import com.shop.models.Offer;
+import com.shop.models.User;
 import com.shop.services.OfferService;
 
 public class OfferServiceImpl implements OfferService {
@@ -38,11 +39,24 @@ public class OfferServiceImpl implements OfferService {
 			else throw new BusinessException("that offer is not pending");
 		} else throw new BusinessException("that offer does not exist");
 	}
-	public Offer selectAcceptedOffer(int id) throws BusinessException {
+	public Offer selectAcceptedOffer(int id, User u) throws BusinessException {
 		Offer o = od.read(id);
+		List<Offer> custOffers = getAcceptedOffersByCustomerId(u.getId());
+		int a = 0;
+		boolean found = false;
+		
 		if (o != null) {
-			if (o.getStatus() == 1) return o;
-			else throw new BusinessException("that offer is not accepted");
+			while (a < custOffers.size() && !found) {
+				if (id == custOffers.get(a).getId()) found = true;
+				a++;
+			}
+			if (found) {
+				if (o.getStatus() == 1) {
+					return o;
+				}
+				else throw new BusinessException("that offer is not accepted");
+			}
+			else throw new BusinessException("you do not have permission to view that offer");
 		} else throw new BusinessException("that offer does not exist");
 	}
 	@Override
