@@ -434,9 +434,7 @@ public class Menu {
 					o("set a password:");
 					pass = sc.nextLine();
 					b();
-					if (InputValidation.validateLength(pass)) {
-						oln("you have successfully registered for an account. your id to log in is " + us.register(c, pass) + ".");
-					}
+					oln("you have successfully registered for an account. your id to log in is " + us.register(c, pass) + ".");
 				}
 			}
 		} catch (InvalidInputException e) {
