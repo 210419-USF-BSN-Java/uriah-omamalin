@@ -1,24 +1,29 @@
 package com.revature.services.impl;
 
 import com.revature.daos.UserDAO;
-import com.revature.daos.impl.UserDAOImpl;
+import com.revature.exceptions.BusinessException;
 import com.revature.models.Reimbursement;
 import com.revature.models.User;
 import com.revature.services.UserService;
 
 public class UserServiceImpl implements UserService {
-	private static UserDAO ud = new UserDAOImpl();
+	private UserDAO ud;
+
+	public UserServiceImpl(UserDAO ud) {
+		super();
+		this.ud = ud;
+	}
 	
 	@Override
-	public User login(String username, String password) {
+	public User login(String username, String password) throws BusinessException {
 		/*
 		 * returns corresponding User object if "username" and "password" combination are valid,
-		 * else returns null;
+		 * else throws a BusinessException;
 		 */
-		User testUser = ud.getByUsername(username);
+		User user = ud.getByUsername(username);
 		
-		if (testUser.getPassword().equals(password)) { return testUser; }
-		else return null;
+		if (user != null && user.getPassword().equals(password)) { return user; }
+		else throw new BusinessException("invalid login");
 	}
 	@Override
 	public void updateInfo(User user) {
