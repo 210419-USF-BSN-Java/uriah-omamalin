@@ -32,4 +32,8 @@ public class UserDAOImpl implements UserDAO {
 	public void deleteById(Integer pk) {
 		// TODO Auto-generated method stub
 	}
+	@Override
+	public User getByUsername(String username) {
+		return null;
+	}
 }
