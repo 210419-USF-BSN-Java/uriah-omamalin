@@ -88,4 +88,12 @@ public class Reimbursement {
 	public void setReimbReceipt(InputStream reimbReceipt) {
 		this.reimbReceipt = reimbReceipt;
 	}
+	
+	@Override
+	public String toString() {
+		return "Reimbursement [reimbId=" + reimbId + ", reimbAuthor=" + reimbAuthor + ", reimbResolver=" + reimbResolver
+				+ ", reimbStatusId=" + reimbStatusId + ", reimbTypeId=" + reimbTypeId + ", reimbAmount=" + reimbAmount
+				+ ", reimbSubmitted=" + reimbSubmitted + ", reimbResolved=" + reimbResolved + ", reimbDescription="
+				+ reimbDescription + ", reimbReceipt=" + reimbReceipt + "]";
+	}
 }

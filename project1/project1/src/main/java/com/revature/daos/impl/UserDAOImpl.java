@@ -1,9 +1,15 @@
 package com.revature.daos.impl;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.revature.daos.UserDAO;
 import com.revature.models.User;
+import com.revature.util.ConnectionUtil;
 
 public class UserDAOImpl implements UserDAO {
 	@Override
@@ -12,8 +18,27 @@ public class UserDAOImpl implements UserDAO {
 	}
 	@Override
 	public User readOne(Integer pk) {
-		// TODO Auto-generated method stub
-		return null;
+		User u = null;
+		String sql = "select * from ers.users where ers_users_id = ?";
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, pk);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				u = new User();
+				
+				u.setUsersId(pk);
+				u.setUsername(rs.getString("ers_username"));
+				u.setPassword(rs.getString("ers_password"));
+				u.setFirstName(rs.getString("user_first_name"));
+				u.setLastName(rs.getString("user_last_name"));
+				u.setEmail(rs.getString("user_email"));
+				u.setRoleId(rs.getInt("user_role_id"));
+			}
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+		}
+		return u;
 	}
 	@Override
 	public List<User> readAll() {
@@ -22,7 +47,23 @@ public class UserDAOImpl implements UserDAO {
 	}
 	@Override
 	public void update(User t) {
-		// TODO Auto-generated method stub
+		String sql = "update ers.users set ers_username = ?, ers_password = ?, user_first_name = ?, user_last_name = ?, user_email = ?, user_role_id = ? where ers_users_id = ?";
+		
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			
+			ps.setString(1, t.getUsername());
+			ps.setString(2, t.getPassword());
+			ps.setString(3, t.getFirstName());
+			ps.setString(4, t.getLastName());
+			ps.setString(5, t.getEmail());
+			ps.setInt(6, t.getRoleId());
+			ps.setInt(7, t.getUsersId());
+			
+			ps.executeUpdate();
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 	@Override
 	public void deleteByObject(User t) {
