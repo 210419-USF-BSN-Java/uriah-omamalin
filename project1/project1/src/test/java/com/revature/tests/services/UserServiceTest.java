@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.revature.daos.UserDAO;
-import com.revature.exceptions.BusinessException;
 import com.revature.models.Reimbursement;
 import com.revature.models.User;
 import com.revature.services.UserService;
@@ -43,24 +42,9 @@ public class UserServiceTest {
 	
 	// login()
 	@Test
-	public void loginWithCorrectCredentials() throws BusinessException {
+	public void loginWithCorrectCredentials() {
 		when(daoMock.getByUsername(USERNAME)).thenReturn(user);
 		assertNotNull(us.login(USERNAME, PASSWORD));
-	}
-	@Test(expected = BusinessException.class)
-	public void loginWithIncorrectPassword() throws BusinessException {
-		when(daoMock.getByUsername(USERNAME)).thenReturn(user);
-		us.login(USERNAME, "incorrect password");
-	}
-	@Test(expected = BusinessException.class)
-	public void loginWithIncorrectUsername() throws BusinessException {
-		when(daoMock.getByUsername(AdditionalMatchers.not(eq(USERNAME)))).thenReturn(null);
-		us.login("incorrect username", PASSWORD);
-	}
-	@Test(expected = BusinessException.class)
-	public void loginWithBothIncorrect() throws BusinessException {
-		when(daoMock.getByUsername(AdditionalMatchers.not(eq(USERNAME)))).thenReturn(null);
-		us.login("wrong", "also wrong");
 	}
 	
 	// updateInfo()
@@ -75,6 +59,7 @@ public class UserServiceTest {
 	@Test
 	public void sendEmailTest() {
 		when(daoMock.readOne(any(Integer.class))).thenReturn(new User());
+		when(reimbMock.getReimbStatusId()).thenReturn(1);
 		assertNotNull(us.sendEmail(reimbMock));
 	}
 }

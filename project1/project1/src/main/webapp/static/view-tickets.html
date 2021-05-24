@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="tablestyle.css">
+	</head>
+	<body>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+			  <div class="navbar-header">
+			  	<a class="navbar-brand" href="http://localhost:8080/project1/static/manager-home.html">employee reimbursement system</a>
+			  </div>
+			  <ul class="nav navbar-nav">
+			  </ul>
+			</div>
+		</nav>
+		<div class="container-fluid">
+			<div>
+				<button id="pending" class="btn btn-success">show pending</button>
+				<button id="resolved" class="btn btn-success">show resolved</button>
+				<button id="all" class="btn btn-success">show all</button>
+			</div>
+			<br>
+			<div>
+				<table id="reimbs">
+					<tr>
+					<th>id</th>
+					<th>amount</th>
+					<th style="width:800px">description</th>
+					<th>type</th>
+					<th>status</th>
+					</tr>
+				</table>
+			</div>
+			<div id="button-div" style="width:10%">
+			</div>
+		</div>
+		<script src="view-tickets.js"></script>
+	</body>
+</html>

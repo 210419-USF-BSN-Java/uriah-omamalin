@@ -1,0 +1,15 @@
+body {
+	background-color: powderblue;
+}
+
+.col-xs-4 {
+	background-color: darkslateblue;
+}
+
+.col-xs-8 {
+    background-color: dodgerblue;
+}
+
+a {
+	color: black;
+}

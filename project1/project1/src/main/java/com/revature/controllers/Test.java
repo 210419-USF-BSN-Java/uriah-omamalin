@@ -1,7 +1,7 @@
 package com.revature.controllers;
 
-import com.revature.daos.ReimbursementDAO;
-import com.revature.daos.UserDAO;
+import java.util.List;
+
 import com.revature.daos.impl.ReimbursementDAOImpl;
 import com.revature.daos.impl.UserDAOImpl;
 import com.revature.models.Reimbursement;
@@ -13,15 +13,17 @@ import com.revature.services.impl.UserServiceImpl;
 
 public class Test {
 	public static void main(String[] args) {
-		ReimbursementDAO rd = new ReimbursementDAOImpl();
-		UserDAO ud = new UserDAOImpl();
-		ReimbursementService rs = new ReimbursementServiceImpl(rd);
-		UserService us = new UserServiceImpl(ud);	
-		byte[] bytes = new byte[1];
-		Reimbursement test = new Reimbursement();
+		UserService us = new UserServiceImpl(new UserDAOImpl());
+		ReimbursementService rs = new ReimbursementServiceImpl(new ReimbursementDAOImpl());
 		
-//		for (Reimbursement r : rs.getResolvedReimbursements()) {
-//			System.out.println(us.sendEmail(r));
-//		}
+		User u = us.login("nselway1", "3wyVd44U5Io");
+		System.out.println(u);
+		
+		u = new User();
+		u.setUsersId(6);
+		List<Reimbursement> li = rs.getAllReimbursementsByAuthor(u);
+		for (Reimbursement r : li) {
+			System.out.println(r.getReimbId() + " " + r.getReimbAuthor());
+		}
 	}
 }

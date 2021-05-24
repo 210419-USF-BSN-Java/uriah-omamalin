@@ -3,9 +3,9 @@ https://www.postgresql.org/docs/7.4/jdbc-binary-data.html (bytea documentation)
 html/css/js -> servlet -> jdbc-> json -> html/css/js
 
 todo:
-
 * add db checks
-* implement logging for all current employee story dao methods
+
 
 done:
 * employee user stories, dao methods done
+* implement logging for all current employee story dao methods

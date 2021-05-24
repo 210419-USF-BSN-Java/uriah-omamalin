@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.daos.UserDAO;
@@ -42,8 +43,29 @@ public class UserDAOImpl implements UserDAO {
 	}
 	@Override
 	public List<User> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> li = new ArrayList<User>();
+		User u;
+		String sql = "select * from ers.users";
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				u = new User();
+				
+				u.setUsersId(rs.getInt("ers_users_id"));
+				u.setUsername(rs.getString("ers_username"));
+				u.setPassword(rs.getString("ers_password"));
+				u.setFirstName(rs.getString("user_first_name"));
+				u.setLastName(rs.getString("user_last_name"));
+				u.setEmail(rs.getString("user_email"));
+				u.setRoleId(rs.getInt("user_role_id"));
+				
+				li.add(u);
+			}
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+		}
+		return li;
 	}
 	@Override
 	public void update(User t) {
@@ -75,6 +97,53 @@ public class UserDAOImpl implements UserDAO {
 	}
 	@Override
 	public User getByUsername(String username) {
-		return null;
+		User u = null;
+		String sql = "select * from ers.users where ers_username = ?";
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, username);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				u = new User();
+				
+				u.setUsersId(rs.getInt("ers_users_id"));
+				u.setUsername(rs.getString("ers_username"));
+				u.setPassword(rs.getString("ers_password"));
+				u.setFirstName(rs.getString("user_first_name"));
+				u.setLastName(rs.getString("user_last_name"));
+				u.setEmail(rs.getString("user_email"));
+				u.setRoleId(rs.getInt("user_role_id"));
+			}
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+		}
+		return u;
+	}
+	@Override
+	public List<User> getUsersByRole(int roleId) {
+		List<User> li = new ArrayList<User>();
+		User u;
+		String sql = "select * from ers.users where user_role_id = ? order by ers_users_id";
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, roleId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				u = new User();
+				
+				u.setUsersId(rs.getInt("ers_users_id"));
+				u.setUsername(rs.getString("ers_username"));
+				u.setPassword(rs.getString("ers_password"));
+				u.setFirstName(rs.getString("user_first_name"));
+				u.setLastName(rs.getString("user_last_name"));
+				u.setEmail(rs.getString("user_email"));
+				u.setRoleId(rs.getInt("user_role_id"));
+				
+				li.add(u);
+			}
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+		}
+		return li;
 	}
 }

@@ -18,6 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.revature.daos.ReimbursementDAO;
 import com.revature.models.Reimbursement;
+import com.revature.models.User;
 import com.revature.services.ReimbursementService;
 import com.revature.services.impl.ReimbursementServiceImpl;
 
@@ -42,14 +43,14 @@ public class ReimbursementServiceTest {
 	// getResolvedReimbursements()
 	@Test
 	public void getResolvedReimbursementsTest() {
-		when(daoMock.getResolvedReimbursements()).thenReturn(new ArrayList<Reimbursement>());
-		assertNotNull(rs.getResolvedReimbursements());
+		when(daoMock.getResolvedReimbursementsByAuthorId(any(Integer.class))).thenReturn(new ArrayList<Reimbursement>());
+		assertNotNull(rs.getResolvedReimbursementsByAuthor(new User()));
 	}
 	
 	// getResolvedReimbursements()
 	@Test
 	public void getPendingReimbursementsTest() {
-		when(daoMock.getPendingReimbursements()).thenReturn(new ArrayList<Reimbursement>());
-		assertNotNull(rs.getPendingReimbursements());
+		when(daoMock.getPendingReimbursementsByAuthorId(any(Integer.class))).thenReturn(new ArrayList<Reimbursement>());
+		assertNotNull(rs.getPendingReimbursementsByAuthor(new User()));
 	}
 }

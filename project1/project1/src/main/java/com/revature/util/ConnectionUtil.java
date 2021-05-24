@@ -19,8 +19,13 @@ public class ConnectionUtil {
 		String username = prop.getProperty("username");
 		String password = prop.getProperty("password");
 
-		if (connection == null || connection.isClosed()) {
-			connection = DriverManager.getConnection(url, username, password);
+		try {
+			if (connection == null || connection.isClosed()) {
+				Class.forName("org.postgresql.Driver");
+				connection = DriverManager.getConnection(url, username, password);
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 		
 		return connection;

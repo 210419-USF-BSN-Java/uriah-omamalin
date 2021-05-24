@@ -1,7 +1,10 @@
 package com.revature.services.impl;
 
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import com.revature.daos.UserDAO;
-import com.revature.exceptions.BusinessException;
 import com.revature.models.Reimbursement;
 import com.revature.models.ReimbursementStatus;
 import com.revature.models.User;
@@ -9,6 +12,7 @@ import com.revature.services.UserService;
 
 public class UserServiceImpl implements UserService {
 	private UserDAO ud;
+	private static Logger log = Logger.getLogger(UserServiceImpl.class);
 	
 	public UserServiceImpl(UserDAO ud) {
 		super();
@@ -16,15 +20,10 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User login(String username, String password) throws BusinessException {
-		/*
-		 * returns corresponding User object if "username" and "password" combination are valid,
-		 * else throws a BusinessException;
-		 */
+	public User login(String username, String password) {
 		User user = ud.getByUsername(username);
-		
-		if (user != null && user.getPassword().equals(password)) { return user; }
-		else throw new BusinessException("invalid login");
+		if (password.equals(user.getPassword())) return user;
+		else return null;
 	}
 	@Override
 	public void updateInfo(User user) {
@@ -32,6 +31,7 @@ public class UserServiceImpl implements UserService {
 		 * updates the information of the "user"
 		 * by storing the new data in the User object;
 		 */
+		log.info(user.getFullName() + " updated their information");
 		ud.update(user);
 	}
 	@Override
@@ -41,11 +41,31 @@ public class UserServiceImpl implements UserService {
 		 * about one of their "reimb" being resolved
 		 * by a "reimb.reimbResolver";
 		 */
-		String author = ud.readOne(reimb.getReimbAuthor()).getFirstName() + " " + ud.readOne(reimb.getReimbAuthor()).getLastName();
-		String resolver = ud.readOne(reimb.getReimbResolver()).getFirstName() + " " + ud.readOne(reimb.getReimbResolver()).getLastName();
+		String author = ud.readOne(reimb.getReimbAuthor()).getFullName();
+		String resolver = ud.readOne(reimb.getReimbResolver()).getFullName();
 		String reimbId = reimb.getReimbId() + "";
 		String reimbStatus = ReimbursementStatus.values()[reimb.getReimbStatusId() - 1] + "";
 		
-		return "an email has been sent to " + author + " about reimbursement #" + reimbId + " being " + reimbStatus.toLowerCase() + " by " + resolver + ".";
+		log.info("an email was sent to " + author);
+		return "an email has been sent to " + author + " about reimbursement#" + reimbId + " being " + reimbStatus.toLowerCase() + " by " + resolver + ".";
+	}
+	@Override
+	public List<User> getUsers() {
+		/*
+		 * returns a list of all User objects;
+		 */
+		return ud.readAll();
+	}
+	@Override
+	public User getUserById(int id) {
+		/*
+		 * returns a User with matching id;
+		 */
+		return ud.readOne(id);
+	}
+
+	@Override
+	public List<User> getUsersByRole(int roleId) {
+		return ud.getUsersByRole(roleId);
 	}
 }
