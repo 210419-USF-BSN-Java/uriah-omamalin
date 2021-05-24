@@ -1,36 +1,20 @@
 # uriah-omamalin
 
-PROJECT NAME
+Project 1 - Employee Reimbursement System
+
 Project Description
-Here goes your awesome project description!
+This application allows Employees to view their own reimbursements and submit reimbursement requests, and allows Managers to view all reimbursements and employees, with the capability to process reimbursement requests.
 
 Technologies Used
-Tech 1 - version 1.0
-Tech 2 - version 2.0
-Tech 3 - version 3.0
+Java, JDBC, Servlets
+SQL, PostgreSQL, AWS RDS
+HTML/CSS/JavaScript
+
 Features
-List of features ready and TODOs for future development
+employees can view their reimbursements and submit reimbursement requests
+managers can view all employees' reimbursements by status, view all employees, and process employee reimbursement requests
 
-Awesome feature 1
-Awesome feature 2
-Awesome feature 3
-To-do list:
-
-Wow improvement to be done 1
-Wow improvement to be done 2
-Getting Started
-(include git clone command) (include all environment setup steps)
-
-Be sure to include BOTH Windows and Unix command
-Be sure to mention if the commands only work on a specific platform (eg. AWS, GCP)
-
-All the code required to get started
-Images of what it should look like
-Usage
-Here, you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
-
-Contributors
-Here list the people who have contributed to this project. (ignore this section, if its a solo project)
-
-License
-This project uses the following license: <license_name>.
+to-do list:
+managers should be able to filter by additional parameters, such as author id, description, and resolve date
+passwords should be hashed
+employees should be able to update their information
