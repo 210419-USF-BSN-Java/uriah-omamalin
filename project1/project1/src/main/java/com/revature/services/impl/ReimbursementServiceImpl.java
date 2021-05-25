@@ -49,8 +49,7 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 		return rd.getAllReimbursementsByAuthorId(u.getUsersId());
 	}
 	@Override
-	public void updateReimb(Reimbursement r, User u) {
-		r.setReimbResolver(u.getUsersId());
+	public void updateReimb(Reimbursement r) {
 		r.setReimbResolved(new Date());
 		rd.update(r);
 	}
@@ -65,5 +64,10 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 	@Override
 	public List<Reimbursement> getAllResolvedReimbursements() {
 		return rd.getAllResolvedReimbursements();
+	}
+
+	@Override
+	public Reimbursement getReimbursement(int id) {
+		return rd.readOne(id);
 	} 
 }

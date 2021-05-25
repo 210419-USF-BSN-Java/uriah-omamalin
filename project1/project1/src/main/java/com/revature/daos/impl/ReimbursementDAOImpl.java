@@ -90,7 +90,20 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 	}
 	@Override
 	public void update(Reimbursement t) {
-		// TODO Auto-generated method stub
+		String sql = "update ers.reimbursement set reimb_status_id = ?, reimb_resolved = ?, reimb_resolver = ? where reimb_id = ?";
+		
+		try (Connection con = ConnectionUtil.getConnectionFromFile()) {
+			PreparedStatement ps = con.prepareStatement(sql);
+			
+			ps.setInt(1, t.getReimbStatusId());
+			ps.setTimestamp(2, new Timestamp(t.getReimbResolved().getTime()));
+			ps.setInt(3, t.getReimbResolver());
+			ps.setInt(4, t.getReimbId());
+			
+			ps.executeUpdate();
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 	@Override
 	public void deleteByObject(Reimbursement t) {

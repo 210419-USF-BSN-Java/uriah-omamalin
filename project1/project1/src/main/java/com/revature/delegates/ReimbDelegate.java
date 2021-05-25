@@ -1,7 +1,6 @@
 package com.revature.delegates;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -57,7 +56,7 @@ public class ReimbDelegate {
 		}
 	}
 		
-		public void addReimb(HttpServletRequest request, HttpServletResponse response) {
+	public void addReimb(HttpServletRequest request, HttpServletResponse response) throws IOException {
 			Reimbursement r = new Reimbursement();
 			
 			r.setReimbAmount(BigDecimal.valueOf(Double.parseDouble(request.getParameter("amount"))));
@@ -85,8 +84,23 @@ public class ReimbDelegate {
 			}
 			
 			r.setReimbSubmitted(new Date());
-			
+			response.setStatus(200);
 			rs.submit(r);
 			log.info("reimbursement submitted");
+	}
+	
+	public void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("6 : test");
+		String token = request.getHeader("Authorization");
+		Reimbursement r = rs.getReimbursement(Integer.parseInt(request.getParameter("id")));;
+		r.setReimbStatusId(Integer.parseInt(request.getParameter("status")));
+		if(token != null) {
+			r.setReimbResolver(Integer.parseInt(token.split(":")[0]));
+		}
+		System.out.println(r.toString());
+		rs.updateReimb(r);
+		System.out.println(r.toString());
+		response.setStatus(200);
+		log.info("reimbursement processed");
 	}
 }

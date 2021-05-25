@@ -36,15 +36,22 @@ public class RequestHelper {
 	public void processPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String path = request.getServletPath();
 		System.out.println("3 : " + path);
-		switch(path) {
-		case "/submit" :
-			reimbDelegate.addReimb(request, response);
-			break;
-		case "/static/login.html" :
-			authDelegate.authenticate(request, response);
-			break;
-		default:
-			response.sendError(405);
+		if (path.startsWith("/api/reimbs")) {
+			reimbDelegate.process(request, response);
+		} else {
+			switch(path) {
+			case "/update" :
+				userDelegate.updateInfo(request, response);
+				break;
+			case "/submit" :
+				reimbDelegate.addReimb(request, response);
+				break;
+			case "/static/login.html" :
+				authDelegate.authenticate(request, response);
+				break;
+			default:
+				response.sendError(405);
+			}
 		}
 	}
 }

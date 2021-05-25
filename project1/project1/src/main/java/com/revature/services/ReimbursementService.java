@@ -13,5 +13,6 @@ public interface ReimbursementService {
 	List<Reimbursement> getAllReimbursements();
 	List<Reimbursement> getAllPendingReimbursements();
 	List<Reimbursement> getAllResolvedReimbursements();
-	void updateReimb(Reimbursement r, User u);
+	void updateReimb(Reimbursement r);
+	Reimbursement getReimbursement(int id);
 }	

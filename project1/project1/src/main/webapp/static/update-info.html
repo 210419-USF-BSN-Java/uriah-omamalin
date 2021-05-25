@@ -21,23 +21,19 @@
 		</nav>
 		<div class="container-fluid">
 			<div>
-				<button id="pending" class="btn btn-success">show pending</button>
-				<button id="resolved" class="btn btn-success">show resolved</button>
-				<button id="all" class="btn btn-success">show all</button>						
-			</div>
+			<h1>update info</h1>
+			<label>first name</label>
+			<input type="text" id="first" class="form-control">
+			<label>last name</label>
+			<input type="text" id="last" class="form-control">
+			<label>email</label>
+			<input type="text" id="email" class="form-control">
 			<br>
-			<div>
-				<table id="reimbs">
-					<tr>
-					<th>id</th>
-					<th>amount</th>
-					<th style="width:800px">description</th>
-					<th>type</th>
-					<th>status</th>
-					</tr>
-				</table>
+			<button id="submit" class="btn btn-success" type="submit">submit</button>
+			<br>
+			<div id="message"></div>
 			</div>
 		</div>
-		<script src="past-tickets.js"></script>
+		<script src="update-info.js"></script>
 	</body>
 </html>
